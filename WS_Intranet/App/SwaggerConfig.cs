@@ -1,0 +1,88 @@
+using System;
+using System.Web.Http;
+using Swashbuckle.Application;
+using Swashbuckle.Swagger;
+using System.Web.Http.Description;
+using System.Collections.Generic;
+using System.Configuration;
+using WS_Intranet.v0.Controllers.FilterAttributes;
+
+namespace WS_Intranet.App
+{
+    public class SwaggerConfig
+    {
+        private const string ASSEMBLY_NAME = "WS_Intranet";
+
+        public static void Register()
+        {
+            GlobalConfiguration.Configuration
+                .EnableSwagger(c =>
+                {
+                    c.PrettyPrint();
+                    c.SingleApiVersion("WS", "Ayuda MuniOnline");
+                    c.OperationFilter<AddRequiredHeaderParameter>();
+                    //c.IncludeXmlComments(String.Format(@"{0}\bin\\Resources\\Documentacion.XML", System.AppDomain.CurrentDomain.BaseDirectory));
+                })
+                .EnableSwaggerUi(c =>
+                {
+                    var thisAssembly = typeof(SwaggerConfig).Assembly;
+
+                    c.DocumentTitle(ASSEMBLY_NAME + " Ayuda MuniOnline");
+                    c.InjectStylesheet(thisAssembly, ASSEMBLY_NAME + ".Resources.Swagger.css");
+                    c.InjectJavaScript(thisAssembly, ASSEMBLY_NAME + ".Resources.Swagger.js");
+                    c.EnableDiscoveryUrlSelector();
+                });
+        }
+
+        public class AddRequiredHeaderParameter : IOperationFilter
+        {
+            public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
+            {
+                if (operation.parameters == null)
+                {
+                    operation.parameters = new List<Parameter>();
+                }
+
+
+                //Token
+                var atributoToken = apiDescription.GetControllerAndActionAttributes<ConToken>().GetEnumerator();
+                if (atributoToken != null && atributoToken.MoveNext() == true)
+                {
+                    AddToken(operation.parameters);
+                }
+
+                // -----------------------------------------------------
+                // V1
+                // -----------------------------------------------------
+                var v1_atributoEsOperador = apiDescription.GetControllerAndActionAttributes<v1.Controllers.FilterAttributes.EsOperador>().GetEnumerator();
+                if (v1_atributoEsOperador != null && v1_atributoEsOperador.MoveNext() == true)
+                {
+                    AddToken(operation.parameters);
+                }
+            }
+
+            private void AddToken(IList<Parameter> parametros)
+            {
+                List<Parameter> lista = new List<Parameter>(parametros);
+                if (lista.Find(x => x.name == "--Token") != null) return;
+
+                parametros.Add(new Parameter
+                {
+                    name = "--Token",
+                    @in = "header",
+                    type = "string",
+                    description = "Token",
+                    required = true
+                });
+                //parametros.Add(new Parameter
+                //{
+                //    name = "--Clave",
+                //    @in = "header",
+                //    type = "string",
+                //    description = "Token",
+                //    required = false
+                //});
+            }
+        }
+    }
+}
