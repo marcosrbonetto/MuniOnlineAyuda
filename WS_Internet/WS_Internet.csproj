@@ -113,6 +113,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\Release.pubxml" />
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -148,19 +150,26 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="v0\Controllers\FilterAttributes\TokenRequerido.cs" />
-    <Compile Include="v0\Controllers\FilterAttributes\Validar.cs" />
+    <Compile Include="v0\Controllers\FilterAttributes\ConToken.cs" />
+    <Compile Include="v0\Controllers\FilterAttributes\_Autorizacion.cs" />
     <Compile Include="v0\RestCall.cs" />
-    <Compile Include="v0\ResultadoServicio.cs" />
-    <Compile Include="v1\Controllers\AjustesController.cs" />
-    <Compile Include="v1\Controllers\UsuarioController.cs" />
-    <Compile Include="v1\Entities\Comandos\ComandoApp_IniciarSesion.cs" />
-    <Compile Include="v1\Entities\Resultados\ResultadoApp_Ajustes.cs" />
-    <Compile Include="v1\Entities\Resultados\ResultadoApp_Usuario.cs" />
+    <Compile Include="v0\Result.cs" />
+    <Compile Include="v1\Controllers\FilterAttributes\EsOperador.cs" />
+    <Compile Include="v1\Controllers\MuniOnlineUsuarioController.cs" />
+    <Compile Include="v1\Controllers\PreguntaController.cs" />
+    <Compile Include="v1\Entities\Comandos\ComandoWS_IniciarSesion.cs" />
+    <Compile Include="v1\Entities\Comandos\ComandoWS_PreguntaActualizar.cs" />
+    <Compile Include="v1\Entities\Comandos\ComandoWS_PreguntaNueva.cs" />
+    <Compile Include="v1\Entities\Consultas\Consulta_Pregunta.cs" />
+    <Compile Include="v1\Entities\Consultas\Consulta_PreguntaPaginada.cs" />
+    <Compile Include="v1\Entities\Resultados\ResultadoWS_Aplicacion.cs" />
+    <Compile Include="v1\Entities\Resultados\ResultadoWS_MuniOnlineUsuario.cs" />
+    <Compile Include="v1\Entities\Resultados\ResultadoWS_Paginador.cs" />
+    <Compile Include="v1\Entities\Resultados\ResultadoWS_Pregunta.cs" />
+    <Compile Include="v1\Entities\Resultados\ResultadoWS_RolMuniOnline.cs" />
+    <Compile Include="v1\Entities\Resultados\ResultadoWS_Tema.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="v1\Entities\Consultas\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

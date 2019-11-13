@@ -50,7 +50,7 @@ namespace WS_Internet.App
                 }
 
                 // Token y ControlAcceso
-                var atributoToken = apiDescription.GetControllerAndActionAttributes<TokenRequerido>().GetEnumerator();
+                var atributoToken = apiDescription.GetControllerAndActionAttributes<ConToken>().GetEnumerator();
                 if (atributoToken != null && atributoToken.MoveNext() == true)
                 {
                     AddHeaders(operation.parameters);
@@ -61,10 +61,10 @@ namespace WS_Internet.App
             {
                 parametros.Add(new Parameter
                 {
-                    name = "Token",
+                    name = "--Token",
                     @in = "header",
                     type = "string",
-                    description = "Token Vecino Virtual",
+                    description = "Token",
                     required = true
                 });
             }

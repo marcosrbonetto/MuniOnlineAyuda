@@ -1,23 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using WS_Internet.v0;
+using WS_Internet.v0.Controllers;
+using WS_Internet.v0.Controllers.FilterAttributes;
 using WS_Internet.v1.Entities.Resultados;
+
 
 namespace WS_Internet.v1.Controllers
 {
-    [RoutePrefix("v1/Usuario")]
-    public class Usuario_v1Controller : ApiController
+    [RoutePrefix("v1/MuniOnlineUsuario")]
+    public class MuniOnlineUsuario_v1Controller : ApiController
     {
 
         [HttpPut]
         [Route("IniciarSesion")]
-        public Result<string> IniciarSesion(ComandoApp_IniciarSesion comando)
+        public Result<string> IniciarSesion(v1.Entities.Comandos.ComandoWS_IniciarSesion comando)
         {
             return RestCall.Call<string>(Request, comando);
         }
 
         [HttpPut]
+        [ConToken]
         [Route("CerrarSesion")]
         public Result<bool> CerrarSesion()
         {
@@ -25,20 +30,7 @@ namespace WS_Internet.v1.Controllers
         }
 
         [HttpGet]
-        [Route("IdUsuario")]
-        public Result<int> GetIdUsuario()
-        {
-            return RestCall.Call<int>(Request);
-        }
-
-        [HttpGet]
-        [Route("Usuario")]
-        public Result<ResultadoApp_Usuario> GetUsuario()
-        {
-            return RestCall.Call<ResultadoApp_Usuario>(Request);
-        }
-
-        [HttpGet]
+        [ConToken]
         [Route("ValidarToken")]
         public Result<bool> ValidarToken()
         {
@@ -46,6 +38,7 @@ namespace WS_Internet.v1.Controllers
         }
 
         [HttpGet]
+        [ConToken]
         [Route("ValidadoRenaper")]
         public Result<bool> ValidadoRenaper()
         {
@@ -53,10 +46,20 @@ namespace WS_Internet.v1.Controllers
         }
 
         [HttpGet]
-        [Route("AplicacionBloqueada")]
-        public Result<bool> AplicacionBloqueada()
+        [ConToken]
+        [Route("EsOperador")]
+        public Result<bool> EsOperador()
         {
             return RestCall.Call<bool>(Request);
         }
+
+        [HttpGet]
+        [ConToken]
+        [Route("Usuario")]
+        public Result<ResultadoWS_MuniOnlineUsuario> GetUsuario()
+        {
+            return RestCall.Call<ResultadoWS_MuniOnlineUsuario>(Request);
+        }
+
     }
 }
